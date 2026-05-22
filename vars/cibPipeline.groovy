@@ -102,18 +102,21 @@ def call(Closure body = {}) {
             stage('Verify') {
                 steps {
                     script {
-                        def sonar = ciConfig.secrets?.sonar
-                        if (sonar?.jenkins?.name) {
-                            withCredentials([string(credentialsId: sonar.jenkins.name, variable: 'SONAR_TOKEN')]) {
+                        def sonar  = ciConfig.secrets?.sonar
+                        def credId = sonar?.jenkins?.name
+                        if (credId) {
+                            withCredentials([string(credentialsId: credId, variable: 'SONAR_TOKEN')]) {
                                 withMaven(maven: toolVersions.maven, jdk: toolVersions.java) {
                                     sh 'mvn sonar:sonar --batch-mode -Dsonar.token=$SONAR_TOKEN'
                                 }
                             }
-                        } else {
-                            // CyberArk integration or token already in env
+                        } else if (env.SONAR_TOKEN) {
+                            // CyberArk or token injected by another means
                             withMaven(maven: toolVersions.maven, jdk: toolVersions.java) {
                                 sh 'mvn sonar:sonar --batch-mode'
                             }
+                        } else {
+                            echo 'Verify skipped — no Sonar credential in .cib-ci.yml and SONAR_TOKEN not set'
                         }
                     }
                 }
