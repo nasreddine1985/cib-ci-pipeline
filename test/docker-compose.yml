@@ -1,0 +1,45 @@
+version: "3.8"
+
+networks:
+  cib-net:
+    driver: bridge
+
+volumes:
+  bitbucket_data:
+  jenkins_home:
+
+services:
+
+  bitbucket:
+    image: atlassian/bitbucket:latest
+    container_name: bitbucket
+    networks:
+      - cib-net
+    ports:
+      - "7990:7990"
+      - "7999:7999"       # SSH for git over SSH
+    volumes:
+      - bitbucket_data:/var/atlassian/application-data/bitbucket
+    environment:
+      SERVER_PROXY_NAME: localhost
+      SERVER_PROXY_PORT: "7990"
+      SERVER_SCHEME: http
+      SERVER_SECURE: "false"
+    restart: unless-stopped
+
+  jenkins:
+    image: jenkins/jenkins:lts-jdk21
+    container_name: jenkins
+    networks:
+      - cib-net
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    environment:
+      JAVA_OPTS: "-Djenkins.install.runSetupWizard=false"
+      CASC_JENKINS_CONFIG: /var/jenkins_home/casc
+    depends_on:
+      - bitbucket
+    restart: unless-stopped
