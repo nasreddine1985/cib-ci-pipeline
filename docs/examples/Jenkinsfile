@@ -1,0 +1,3 @@
+@Library("cib-ci-pipeline") _
+cibPipeline {
+}

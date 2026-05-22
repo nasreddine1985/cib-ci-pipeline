@@ -1,0 +1,21 @@
+template: mvn
+
+secrets:
+  artifactory:
+    cyberark:
+      name: ""        # CyberArk account name — leave blank if using Jenkins credentials
+    jenkins:
+      name: ""        # Jenkins credential ID (username+password) for Artifactory
+
+  sonar:
+    jenkins:
+      name: ""        # Jenkins credential ID (secret text) for SonarQube token
+      type: token
+
+  git_ssh:
+    jenkins:
+      name: ""        # Jenkins credential ID (SSH private key) for Git operations
+      type: ssh-key
+
+docker:
+  registry: "registry.cib.echonet"   # Override with your team's Docker registry

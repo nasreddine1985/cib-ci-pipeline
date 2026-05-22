@@ -1,0 +1,6 @@
+// Local test Jenkinsfile — loads cib-ci-pipeline from the current repo instead of Jenkins SCM
+library identifier: 'cib-ci-pipeline@local',
+        retriever: modernSCM([$class: 'LocalSource', directory: '.'])
+
+cibPipeline {
+}
