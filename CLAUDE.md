@@ -16,10 +16,6 @@ docs/examples/
   ├── .cib-ci.yml           ← annotated config template
   ├── Jenkinsfile           ← minimal consumer Jenkinsfile
   └── .tool-versions        ← java / maven version pins
-test/
-  ├── Jenkinsfile.local     ← used by run-local.sh for local testing
-  ├── run-local.sh          ← Jenkinsfile Runner test script (Docker required)
-  └── plugins.txt           ← Jenkins plugins needed by the runner
 ```
 
 ## Pipeline flows (auto-detected)
@@ -54,17 +50,6 @@ Optional: `.tool-versions` to pin `java` and `maven` versions.
 
 `cib-sample-app` at `/Users/n.abassi/cib-sample-app` (GitHub: `nasreddine1985/cib-sample-app`)
 — Spring Boot 3.2.5 / Java 21 REST API used to test this pipeline end-to-end.
-
-## Local testing
-
-```bash
-./test/run-local.sh              # simulate PR
-./test/run-local.sh dev          # simulate dev push
-./test/run-local.sh RELEASE      # simulate release flow
-```
-
-Requires Docker. Stages that call external services (Sonar, Artifactory, Docker registry) will
-fail locally — that is expected. Goal is to verify correct stage selection per flow.
 
 ## Jenkins setup required
 

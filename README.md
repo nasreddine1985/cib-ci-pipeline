@@ -301,34 +301,6 @@ By default the pipeline type is `AUTO` — detected from the build context. For 
 
 ---
 
-## Local Testing
-
-Test the pipeline locally using **Jenkinsfile Runner** (Docker required).
-
-```bash
-# Clone this repository and run from its root
-
-# Simulate a PR
-./test/run-local.sh
-
-# Simulate a push to dev
-./test/run-local.sh dev
-
-# Simulate a push to a security branch
-./test/run-local.sh labels/analytics
-
-# Run the CONFIGURE_DEV manual flow
-./test/run-local.sh CONFIGURE_DEV
-
-# Run the RELEASE manual flow
-./test/run-local.sh RELEASE
-```
-
-On the first run Docker pulls `jenkins/jenkinsfile-runner:latest` (~1–2 min).  
-Stages that call external services (SonarQube, Artifactory, Docker registry) will fail locally — this is expected. The goal is to verify that the correct stages are executed and skipped for each flow.
-
----
-
 ## Troubleshooting
 
 | Symptom | Likely cause | Fix |

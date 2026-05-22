@@ -1,8 +1,0 @@
-workflow-aggregator:latest
-git:latest
-credentials-binding:latest
-ssh-credentials:latest
-maven-plugin:latest
-pipeline-utility-steps:latest
-pipeline-stage-step:latest
-junit:latest
